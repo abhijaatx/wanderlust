@@ -4,11 +4,6 @@ const Listing = require("../models/listing");
 const dbUrl = process.env.ATLAS_DB_URL;
 
 
-if (process.env.NODE_ENV != "production") {
-    require('dotenv').config();
-}
-
-
 console.log(dbUrl);
 main()
     .then(() => {
