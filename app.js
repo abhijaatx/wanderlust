@@ -51,7 +51,7 @@ const store = MongoStore.create({
     touchAfter: 24 * 3600,
 });
 
-store.on("errpr", () => {
+store.on("error", () => {
     console.log("ERROR in mongo session store!");
 });
 
@@ -85,6 +85,10 @@ app.use((req, res, next) => {
     next();
 });
 
+app.get('/', (req, res) => {
+    res.redirect('/listings');
+});
+
 app.get("/demouser", async (req, res) => {
     let fakeuser = new User({
         email: "abc@gmail.com",
@@ -101,7 +105,6 @@ app.use("/", userRouter);
 app.use((err, req, res, next) => {
     let { statusCode = 500, message = "Something went wrong!" } = err;
     res.render("error.ejs", { err });
-    //res.status(statusCode).send(message);
 });
 
 app.listen(8080, () => {
