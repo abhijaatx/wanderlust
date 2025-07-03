@@ -1,6 +1,15 @@
 const mongoose = require("mongoose");
 const initData = require("./data");
 const Listing = require("../models/listing");
+const dbUrl = process.env.ATLAS_DB_URL;
+
+
+if (process.env.NODE_ENV != "production") {
+    require('dotenv').config();
+}
+
+
+console.log(dbUrl);
 main()
     .then(() => {
         console.log("Connected to MongoDB");
@@ -10,14 +19,14 @@ main()
     });
 
 async function main() {
-    await mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");
+    await mongoose.connect(dbUrl);
 }
 
 const initDB = async () => {
     await Listing.deleteMany({});
     initData.data = initData.data.map((obj) => ({
         ...obj,
-        owner: "6844732723c9ff35f35306bb",
+        owner: "6866dbc840c27dcd465f5593",
     }));
     await Listing.insertMany(initData.data);
     console.log("Database initialized with sample data");
